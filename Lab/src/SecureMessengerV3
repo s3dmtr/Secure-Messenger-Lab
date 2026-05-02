@@ -1,1 +1,226 @@
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.AEADBadTagException;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.swing.*;
+import java.awt.*;
+import java.security.SecureRandom;
+import java.util.Base64;
 
+public class SecureMessengerV3 extends JFrame {
+
+    private JTextArea inputArea;
+    private JTextArea outputArea;
+
+    private SecretKey secretKey;
+    private byte[] nonceBytes;
+    private byte[] ciphertext;
+
+    private static final int GCM_TAG_LENGTH = 128;
+    private static final int GCM_NONCE_LENGTH = 12;
+
+    public SecureMessengerV3() {
+        setTitle("Secure Messenger Lab - V3 Protection");
+        setSize(850, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        initializeCrypto();
+        buildUI();
+    }
+
+    private void initializeCrypto() {
+        try {
+            KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+            keyGenerator.init(128);
+            secretKey = keyGenerator.generateKey();
+
+            nonceBytes = new byte[GCM_NONCE_LENGTH];
+            SecureRandom secureRandom = new SecureRandom();
+            secureRandom.nextBytes(nonceBytes);
+
+        } catch (Exception e) {
+            showError("Crypto initialization failed: " + e.getMessage());
+        }
+    }
+
+    private void buildUI() {
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        JLabel title = new JLabel("Secure Messenger Lab", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+
+        JLabel subtitle = new JLabel("Version 3 — Protection with AES-GCM", SwingConstants.CENTER);
+        subtitle.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JPanel headerPanel = new JPanel(new GridLayout(2, 1));
+        headerPanel.add(title);
+        headerPanel.add(subtitle);
+
+        inputArea = new JTextArea(6, 35);
+        inputArea.setLineWrap(true);
+        inputArea.setWrapStyleWord(true);
+        inputArea.setText("Hello Bob, this message is protected with AES-GCM.");
+
+        outputArea = new JTextArea(18, 45);
+        outputArea.setEditable(false);
+        outputArea.setLineWrap(true);
+        outputArea.setWrapStyleWord(true);
+
+        JButton encryptButton = new JButton("Encrypt Message");
+        JButton decryptButton = new JButton("Decrypt Message");
+        JButton tamperButton = new JButton("Tamper Test");
+        JButton clearButton = new JButton("Clear Output");
+
+        encryptButton.addActionListener(e -> encryptMessage());
+        decryptButton.addActionListener(e -> decryptMessage());
+        tamperButton.addActionListener(e -> tamperTest());
+        clearButton.addActionListener(e -> outputArea.setText(""));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(encryptButton);
+        buttonPanel.add(decryptButton);
+        buttonPanel.add(tamperButton);
+        buttonPanel.add(clearButton);
+
+        JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
+        inputPanel.add(new JLabel("Message Input:"), BorderLayout.NORTH);
+        inputPanel.add(new JScrollPane(inputArea), BorderLayout.CENTER);
+
+        JPanel outputPanel = new JPanel(new BorderLayout(5, 5));
+        outputPanel.add(new JLabel("Protection Lab Output:"), BorderLayout.NORTH);
+        outputPanel.add(new JScrollPane(outputArea), BorderLayout.CENTER);
+
+        mainPanel.add(headerPanel, BorderLayout.NORTH);
+        mainPanel.add(inputPanel, BorderLayout.WEST);
+        mainPanel.add(outputPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(mainPanel);
+    }
+
+    private void encryptMessage() {
+        try {
+            String plaintext = inputArea.getText();
+
+            if (plaintext.trim().isEmpty()) {
+                showError("Please enter a message first.");
+                return;
+            }
+
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH, nonceBytes);
+
+            Cipher encryptCipher = Cipher.getInstance("AES/GCM/NoPadding");
+            encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec);
+
+            ciphertext = encryptCipher.doFinal(plaintext.getBytes());
+
+            outputArea.setText(
+                    "===== AES-GCM Encryption Result =====\n\n" +
+                    "Plaintext:\n" + plaintext + "\n\n" +
+                    "AES Key (Base64):\n" + Base64.getEncoder().encodeToString(secretKey.getEncoded()) + "\n\n" +
+                    "Nonce (Base64):\n" + Base64.getEncoder().encodeToString(nonceBytes) + "\n\n" +
+                    "Ciphertext + Authentication Tag (Base64):\n" +
+                    Base64.getEncoder().encodeToString(ciphertext) + "\n\n" +
+                    "Observation:\n" +
+                    "AES-GCM encrypts the message and adds integrity protection.\n" +
+                    "If the ciphertext is modified, decryption should fail."
+            );
+
+        } catch (Exception e) {
+            showError("Encryption failed: " + e.getMessage());
+        }
+    }
+
+    private void decryptMessage() {
+        try {
+            if (ciphertext == null) {
+                showError("Please encrypt a message before decrypting.");
+                return;
+            }
+
+            String decryptedMessage = decrypt(ciphertext);
+
+            outputArea.append(
+                    "\n\n===== Decryption Result =====\n\n" +
+                    "Decrypted Message:\n" + decryptedMessage + "\n\n" +
+                    "Observation:\n" +
+                    "The message was decrypted successfully because it was not modified."
+            );
+
+        } catch (AEADBadTagException e) {
+            outputArea.append(
+                    "\n\n===== Decryption Failed =====\n\n" +
+                    "Result:\nTampering detected. Authentication tag verification failed."
+            );
+        } catch (Exception e) {
+            showError("Decryption failed: " + e.getMessage());
+        }
+    }
+
+    private void tamperTest() {
+        try {
+            if (ciphertext == null) {
+                showError("Please encrypt a message before running the tamper test.");
+                return;
+            }
+
+            byte[] tamperedCiphertext = ciphertext.clone();
+            tamperedCiphertext[0] = (byte) (tamperedCiphertext[0] ^ 1);
+
+            outputArea.append(
+                    "\n\n===== Tamper Test =====\n\n" +
+                    "Attack Action:\n" +
+                    "One bit of the ciphertext was modified.\n\n" +
+                    "Tampered Ciphertext (Base64):\n" +
+                    Base64.getEncoder().encodeToString(tamperedCiphertext) + "\n\n"
+            );
+
+            try {
+                String tamperedMessage = decrypt(tamperedCiphertext);
+
+                outputArea.append(
+                        "Tampered Decrypted Message:\n" +
+                        tamperedMessage + "\n\n" +
+                        "Observation:\n" +
+                        "Unexpected result: the tampered message was decrypted."
+                );
+
+            } catch (AEADBadTagException e) {
+                outputArea.append(
+                        "Result:\n" +
+                        "Tampering detected. The message was rejected.\n\n" +
+                        "Observation:\n" +
+                        "AES-GCM detected that the ciphertext was modified.\n" +
+                        "This provides integrity protection, unlike AES-CBC alone."
+                );
+            }
+
+        } catch (Exception e) {
+            showError("Tamper test failed: " + e.getMessage());
+        }
+    }
+
+    private String decrypt(byte[] encryptedData) throws Exception {
+        GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH, nonceBytes);
+
+        Cipher decryptCipher = Cipher.getInstance("AES/GCM/NoPadding");
+        decryptCipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec);
+
+        byte[] decryptedBytes = decryptCipher.doFinal(encryptedData);
+        return new String(decryptedBytes);
+    }
+
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            SecureMessengerV3 app = new SecureMessengerV3();
+            app.setVisible(true);
+        });
+    }
+}
