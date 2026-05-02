@@ -1,44 +1,78 @@
-# Secure Messenger Lab
+# 🔐 Secure Messenger Lab
 
-A Java-based secure messaging lab that demonstrates how encrypted messages work, how basic attacks can affect them, and how security can be improved.
+A hands-on cybersecurity project that explores how encrypted communication works, how it can be attacked, and how it can be secured properly.
 
-## Project Goal
+---
 
-This project started as a cryptography learning exercise and evolved into a small security-focused lab.
+## 🧠 Overview
 
-The goal is to understand that encryption alone is not enough. A secure messaging system should also consider integrity, authentication, and replay protection.
+This project started as a simple AES encryption implementation and evolved into a security-focused lab.
 
-## Roadmap
+The main idea is:
 
-### Version 1.0 — Basic AES Messaging
-- Encrypt messages using AES
+> Encryption alone does not guarantee security.
+
+Through this project, I demonstrate:
+- How messages are encrypted using AES
+- How attackers can manipulate encrypted data
+- Why integrity and replay protection are essential
+
+---
+
+## 🚀 Project Evolution
+
+### 🟢 Version 1 — Basic AES Messaging
+- Encrypt plaintext using AES (CBC mode)
 - Decrypt ciphertext back to plaintext
 - Display key, IV, and ciphertext
 
-### Version 2.0 — Attack Simulation
-- Simulate message tampering
-- Simulate replay attacks
-- Observe why encryption alone is not sufficient
+---
 
-### Version 3.0 — Security Improvement
-- Add integrity protection
+### 🔴 Version 2 — Breaking the System
+- Simulate **message tampering**
+- Simulate **replay attacks**
+- Observe system weaknesses
+
+---
+
+### 🟣 Version 3 — Fixing the Problem
+- Add integrity protection (HMAC / AEAD)
 - Prevent tampered messages
-- Improve replay resistance
+- Improve system security
 
-### Version 4.0 — GUI Portfolio Version
-- Build a Java GUI
-- Make the lab easier to demonstrate
-- Prepare screenshots and documentation
+---
 
-## Technologies
+### 🔵 Version 4 — GUI Application
+- Build a Java Swing interface
+- Allow user input
+- Add buttons for:
+  - Encrypt
+  - Decrypt
+  - Tamper Attack
+  - Replay Attack
+
+---
+
+## ⚙️ Technologies Used
 
 - Java
 - Java Swing
-- AES Encryption
-- CBC Mode
+- AES (CBC Mode)
 - SecureRandom
 - Base64 Encoding
 
-## Status
+---
 
-Currently in development.
+## 📌 Key Takeaway
+
+> A secure system requires more than encryption — it needs integrity, authentication, and protection against replay attacks.
+
+---
+
+## 📸 Screenshots
+
+Coming soon...
+
+---
+
+## 📂 Project Structure
