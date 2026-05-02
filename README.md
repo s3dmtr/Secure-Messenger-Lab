@@ -34,7 +34,7 @@ Through this project, I demonstrate:
 
 ### 🔵 Version 2 — GUI Encryption Demo
 
-![Encryption](screenshots/v2-encryption.png)
+![Encryption](screenshots/v2-aes-encryption-gui.png)
 
 * Java Swing interface
 * User message input
@@ -45,7 +45,12 @@ Through this project, I demonstrate:
 
 ### 🔴 Version 2.5 — Attack Simulation
 
+#### Tampering Attack
+
 ![Tampering](screenshots/v2-5-tampering-attack.png)
+
+#### Replay Attack
+
 ![Replay](screenshots/v2-5-replay-attack.png)
 
 * Tampering attack simulation
@@ -57,7 +62,13 @@ Through this project, I demonstrate:
 
 ### 🟣 Version 3 — Protection with AES-GCM
 
-![Protection](screenshots/v3-aes-gcm-protection.png)
+#### Encryption + Decryption
+
+![Protection](screenshots/V3_Decypt_Encrypt.png)
+
+#### Tamper Detection
+
+![Tamper Test](screenshots/V3_Tamper_Test.png)
 
 * AES-GCM (Authenticated Encryption)
 * Detects any modification in ciphertext
@@ -90,10 +101,11 @@ Secure-Messenger-Lab/
 │   ├── SecureMessengerV2_5.java
 │   └── SecureMessengerV3.java
 ├── screenshots/
-│   ├── v2-encryption.png
+│   ├── v2-aes-encryption-gui.png
 │   ├── v2-5-tampering-attack.png
 │   ├── v2-5-replay-attack.png
-│   └── v3-aes-gcm-protection.png
+│   ├── V3_Decypt_Encrypt.png
+│   └── V3_Tamper_Test.png
 ├── README.md
 └── docs/
 ```
