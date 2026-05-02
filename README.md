@@ -1,55 +1,42 @@
 # 🔐 Secure Messenger Lab
 
-A hands-on cybersecurity project that explores how encrypted communication works, how it can be attacked, and how it can be secured properly.
+A hands-on cybersecurity project that demonstrates how encrypted communication works, how it can be attacked, and how it can be improved.
 
 ---
 
 ## 🧠 Overview
 
-This project started as a simple AES encryption implementation and evolved into a security-focused lab.
+This project started as a university assignment focused on AES encryption.  
+It later evolved into a personal lab to explore real-world security concepts.
 
-The main idea is:
+The main idea behind this project is:
 
 > Encryption alone does not guarantee security.
 
 Through this project, I demonstrate:
 - How messages are encrypted using AES
 - How attackers can manipulate encrypted data
-- Why integrity and replay protection are essential
+- Why integrity and replay protection are critical
 
 ---
 
-## 🚀 Project Evolution
+## 🚀 Project Versions
 
-### 🟢 Version 1 — Basic AES Messaging
-- Encrypt plaintext using AES (CBC mode)
-- Decrypt ciphertext back to plaintext
-- Display key, IV, and ciphertext
-
----
-
-### 🔴 Version 2 — Breaking the System
-- Simulate **message tampering**
-- Simulate **replay attacks**
-- Observe system weaknesses
+### 🟢 Version 1 — University CLI Version
+- AES encryption and decryption (CBC mode)
+- Random key and IV generation
+- Message tampering simulation
+- Replay attack simulation
+- Command-line output for demonstration
 
 ---
 
-### 🟣 Version 3 — Fixing the Problem
-- Add integrity protection (HMAC / AEAD)
-- Prevent tampered messages
-- Improve system security
-
----
-
-### 🔵 Version 4 — GUI Application
-- Build a Java Swing interface
-- Allow user input
-- Add buttons for:
-  - Encrypt
-  - Decrypt
-  - Tamper Attack
-  - Replay Attack
+### 🔵 Version 2 — Portfolio GUI Version
+- Java Swing graphical interface
+- User message input
+- Encrypt and decrypt buttons
+- Clean and interactive demonstration
+- Designed for portfolio and LinkedIn showcase
 
 ---
 
@@ -63,15 +50,15 @@ Through this project, I demonstrate:
 
 ---
 
-## 📌 Key Takeaway
+## 📌 Key Takeaways
 
-> A secure system requires more than encryption — it needs integrity, authentication, and protection against replay attacks.
-
----
-
-## 📸 Screenshots
-
-Coming soon...
+- AES provides **confidentiality**, but not **integrity**
+- Encrypted messages can still be modified without detection
+- Replay attacks are possible without freshness validation
+- A secure system must include:
+  - Integrity protection (HMAC / AEAD)
+  - Authentication
+  - Replay protection mechanisms
 
 ---
 
