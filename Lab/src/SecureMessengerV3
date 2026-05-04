@@ -22,7 +22,7 @@ public class SecureMessengerV3 extends JFrame {
 
     public SecureMessengerV3() {
         setTitle("Secure Messenger Lab - V3 Protection");
-        setSize(850, 600);
+        setSize(900, 620);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -72,17 +72,20 @@ public class SecureMessengerV3 extends JFrame {
         JButton encryptButton = new JButton("Encrypt Message");
         JButton decryptButton = new JButton("Decrypt Message");
         JButton tamperButton = new JButton("Tamper Test");
+        JButton replayButton = new JButton("Replay Test");
         JButton clearButton = new JButton("Clear Output");
 
         encryptButton.addActionListener(e -> encryptMessage());
         decryptButton.addActionListener(e -> decryptMessage());
         tamperButton.addActionListener(e -> tamperTest());
+        replayButton.addActionListener(e -> replayTest());
         clearButton.addActionListener(e -> outputArea.setText(""));
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(encryptButton);
         buttonPanel.add(decryptButton);
         buttonPanel.add(tamperButton);
+        buttonPanel.add(replayButton);
         buttonPanel.add(clearButton);
 
         JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
@@ -200,6 +203,34 @@ public class SecureMessengerV3 extends JFrame {
 
         } catch (Exception e) {
             showError("Tamper test failed: " + e.getMessage());
+        }
+    }
+
+    private void replayTest() {
+        try {
+            if (ciphertext == null) {
+                showError("Please encrypt a message before running the replay test.");
+                return;
+            }
+
+            byte[] replayedCiphertext = ciphertext.clone();
+            String replayedMessage = decrypt(replayedCiphertext);
+
+            outputArea.append(
+                    "\n\n===== Replay Test =====\n\n" +
+                    "Attack Action:\n" +
+                    "The attacker resends the same valid ciphertext again.\n\n" +
+                    "Replayed Message:\n" +
+                    replayedMessage + "\n\n" +
+                    "Observation:\n" +
+                    "AES-GCM successfully verifies integrity, so the replayed message is still accepted.\n" +
+                    "This means AES-GCM protects against tampering, but it does not prevent replay attacks by itself.\n\n" +
+                    "Required Improvement:\n" +
+                    "To prevent replay attacks, the system needs freshness validation such as timestamps, message IDs, or nonce tracking."
+            );
+
+        } catch (Exception e) {
+            showError("Replay test failed: " + e.getMessage());
         }
     }
 
