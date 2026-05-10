@@ -71,10 +71,10 @@ Tampered messages are rejected instead of being decrypted.
 ### Screenshots
 
 #### Encryption & Decryption
-![V3 Encryption](screenshots/V3_Decrypt_Encrypt.png)
+![V3 Encryption](screenshots/v3-decrypt-encrypt.png)
 
 #### Tamper Detection
-![V3 Tamper](screenshots/V3_Tamper_Test.png)
+![V3 Tamper](screenshots/v3-tamper-test.png)
 
 ---
 
