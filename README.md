@@ -1,136 +1,140 @@
-# 🔐 Secure Messenger Lab
+# Secure Messenger Lab 🔐
 
-A hands-on cybersecurity project that demonstrates how encrypted communication works, how it can be attacked, and how it can be secured properly.
+A cybersecurity-focused Java project that demonstrates the evolution of a secure messaging system through multiple versions, starting from basic AES encryption and progressing toward attack simulation and message protection using AES-GCM.
 
----
-
-## 🧠 Overview
-
-This project started as a university assignment focused on AES encryption, then evolved into a practical security lab.
-
-The core idea behind this project is:
-
-> Encryption alone does not guarantee security.
-
-Through this project, I demonstrate:
-
-* How messages are encrypted using AES
-* How attackers can manipulate encrypted data
-* Why integrity and replay protection are critical
-* How modern encryption (AES-GCM) solves these problems
+This project was originally developed as part of a university cryptography course, then expanded into a security analysis and secure messaging simulation project.
 
 ---
 
-## 🚀 Project Evolution
+# Project Evolution
 
-### 🟢 Version 1 — University CLI Version
+## Version 1 — Basic AES Encryption (CLI)
 
-* AES-CBC encryption and decryption
-* Random key and IV generation
-* Command-line interface
-* Basic cryptography implementation
+The first version demonstrates basic AES encryption and decryption using a command-line interface.
 
----
-
-### 🔵 Version 2 — GUI Encryption Demo
-
-![Encryption](screenshots/v2-aes-encryption-gui.png)
-
-* Java Swing interface
-* User message input
-* Encrypt / Decrypt buttons
-* Visual representation of cryptographic output
+### Features
+- AES encryption
+- AES decryption
+- Base64 output
+- Simple CLI implementation
 
 ---
 
-### 🔴 Version 2.5 — Attack Simulation
+## Version 2 — GUI AES Encryption
+
+The project was upgraded into a graphical user interface (GUI) application to improve usability and visualization.
+
+### Features
+- GUI-based encryption and decryption
+- User message input
+- AES encryption visualization
+
+### Screenshot
+
+![V2 GUI](screenshots/v2-aes-encryption-gui.png)
+
+---
+
+## Version 2.5 — Attack Simulation
+
+This version introduced security attack simulations to analyze weaknesses in encrypted messaging systems.
+
+### Simulated Attacks
+- Tampering Attack
+- Replay Attack
+
+### Goal
+Demonstrate that encryption alone does not always guarantee complete message protection.
+
+### Screenshots
 
 #### Tampering Attack
-
-![Tampering](screenshots/v2-5-tampering-attack.png)
+![V2.5 Tampering](screenshots/v2-5-tampering-attack.png)
 
 #### Replay Attack
-
-![Replay](screenshots/v2-5-replay-attack.png)
-
-* Tampering attack simulation
-* Replay attack simulation
-* Demonstrates weaknesses of AES-CBC
-* Shows how attackers can manipulate encrypted data
+![V2.5 Replay](screenshots/v2-5-replay-attack.png)
 
 ---
 
-### 🟣 Version 3 — Protection with AES-GCM
+## Version 3 — AES-GCM Protection
 
-#### Encryption + Decryption
+The system was upgraded from AES-CBC to AES-GCM to add integrity protection and authentication.
 
-![Protection](screenshots/V3_Decypt_Encrypt.png)
+### Improvements
+- Tampering detection
+- Authentication tag verification
+- Secure message validation
+
+### Security Result
+Tampered messages are rejected instead of being decrypted.
+
+### Screenshots
+
+#### Encryption & Decryption
+![V3 Encryption](screenshots/V3_Decrypt_Encrypt.png)
 
 #### Tamper Detection
-
-![Tamper Test](screenshots/V3_Tamper_Test.png)
-
-* AES-GCM (Authenticated Encryption)
-* Detects any modification in ciphertext
-* Rejects tampered messages
-* Provides both confidentiality and integrity
-
-> Unlike AES-CBC, AES-GCM detects any modification in the ciphertext and rejects it, providing both confidentiality and integrity.
+![V3 Tamper](screenshots/V3_Tamper_Test.png)
 
 ---
 
-## ⚙️ Technologies Used
+## Version 4 — Secure Messaging Simulation
 
-* Java
-* Java Swing (GUI)
-* AES Encryption
-* AES-CBC Mode
-* AES-GCM Mode
-* SecureRandom
-* Base64 Encoding
+The final version transforms the project into an interactive Alice-to-Bob secure messaging simulation.
 
----
+### Features
+- Alice and Bob messaging simulation
+- Network channel visualization
+- Encrypted message delivery
+- Tampering detection
+- Replay attack demonstration
+- AES-GCM integrity protection
 
-## 📂 Project Structure
+### Screenshots
 
-```
-Secure-Messenger-Lab/
-├── src/
-│   ├── SecureMessagingV1.java
-│   ├── SecureMessengerGUI.java
-│   ├── SecureMessengerV2_5.java
-│   └── SecureMessengerV3.java
-├── screenshots/
-│   ├── v2-aes-encryption-gui.png
-│   ├── v2-5-tampering-attack.png
-│   ├── v2-5-replay-attack.png
-│   ├── V3_Decypt_Encrypt.png
-│   └── V3_Tamper_Test.png
-├── README.md
-└── docs/
-```
+#### Send Encrypted Message
+![V4 Send](screenshots/v4-send-encrypted-message.png)
+
+#### Tamper Message
+![V4 Tamper](screenshots/v4-tamper-message.png)
+
+#### Replay Message
+![V4 Replay](screenshots/v4-replay-message.png)
 
 ---
 
-## 📌 Key Takeaways
+# Security Concepts Demonstrated
 
-* AES-CBC provides confidentiality but not integrity
-* Encrypted messages can still be modified without detection
-* Replay attacks are possible without validation
-* Secure systems must include:
-
-  * Integrity protection
-  * Authentication
-  * Freshness (anti-replay)
-
----
-
-## 🛠 Status
-
-✅ Completed — Full encryption, attack simulation, and protection implementation
+- AES Encryption
+- AES-GCM
+- Message Confidentiality
+- Integrity Protection
+- Authentication
+- Tampering Attacks
+- Replay Attacks
+- Secure Messaging Concepts
 
 ---
 
-## 👨‍💻 Author
+# Technologies Used
+
+- Java
+- Java Swing (GUI)
+- AES Encryption
+- AES-GCM
+- Base64 Encoding
+
+---
+
+# Educational Purpose
+
+This project was developed for educational and cybersecurity learning purposes to explore how secure messaging systems evolve from simple encryption into more security-aware implementations.
+
+---
+
+# Author
 
 Saad Almutairi
+
+Cybersecurity Diploma Student  
+Imam Mohammad Ibn Saud Islamic University
